@@ -1,6 +1,32 @@
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
-
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { useEffect } from "react";
+//프로그래매틱한 이동방식
 export default function App({ Component, pageProps }: AppProps) {
-  return <Component {...pageProps} />;
+  const router = useRouter();
+  const onclickButton = () => {
+    router.push("/test"); //push, replace,back
+  };
+  useEffect(() => {
+    router.prefetch("/test");
+  }, []);
+  return (
+    <>
+      <header>
+        <Link href={"/"}>index</Link>
+        &nbsp;
+        <Link href={"/Search"} prefetch={false}>
+          serach
+        </Link>
+        &nbsp;
+        <Link href={"/book/1"}>book/1</Link>
+        <div>
+          <button onClick={onclickButton}>/test 페이지로 이동!</button>
+        </div>
+      </header>
+      <Component {...pageProps} />
+    </>
+  );
 }
